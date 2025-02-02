@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        input, button {
+            margin-top: 10px;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+        }
+        button {
+            background-color: orange;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #ff8c00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Confirm Your Payment</h2>
+        <form id="payment-form">
+            <!-- Booking details -->
+            <input type="text" id="name" placeholder="Your Name" value="{{ name or '' }}" readonly>
+            <input type="text" id="seats" placeholder="Selected Seats" value="{{ seats or '' }}" readonly>
+            <input type="number" id="seat-count" placeholder="Number of Seats" value="{{ seat_count or '' }}" readonly>
+
+            <!-- Movie Details -->
+            <input type="text" id="moviename" placeholder="Movie Name" value="{{ movie.name or '' }}" readonly>
+            <input type="text" id="movieLanguage" placeholder="Movie Language" value="{{ movie.language or '' }}" readonly>
+            <input type="number" id="price-per-seat" placeholder="Price per Seat" value="{{ movie.price or '' }}" readonly>
+
+            <!-- Payment Details -->
+            <input type="email" id="email" placeholder="Email for Confirmation" required>
+            <input type="text" id="card-number" placeholder="Card Number" required>
+            <input type="text" id="expiration-date" placeholder="Expiration Date (MM/YY)" required>
+            <input type="text" id="cvv" placeholder="CVV" required>
+            <button type="button" onclick="confirmPayment()">Confirm Payment</button>
+        </form>
+    </div>
+
+    <script>
+        function confirmPayment() {
+            const name = document.getElementById('name').value;
+            const seats = document.getElementById('seats').value;
+            const movieName = document.getElementById('moviename').value;
+            const movieLanguage = document.getElementById('movieLanguage').value;
+            const seatCount = document.getElementById('seat-count').value;
+            const pricePerSeat = document.getElementById('price-per-seat').value;
+            const email = document.getElementById('email').value;
+    
+            const totalPrice = Number(seatCount) * Number(pricePerSeat);
+    
+            fetch('/payment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name,
+                    seats,
+                    movieName,
+                    movieLanguage,
+                    seatCount,
+                    pricePerSeat,
+                    totalPrice,
+                    email
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    alert(data.message);
+                    if (data.redirect_url) {
+                        window.location.href = data.redirect_url; // Redirect to index page
+                    }
+                } else {
+                    alert('Error: ' + (data.error || 'Unknown error'));
+                }
+            })
+            .catch(error => {
+                alert('Error: ' + error);
+                console.error(error);
+            });
+        }
+    </script>
+    
+</body>
+</html>

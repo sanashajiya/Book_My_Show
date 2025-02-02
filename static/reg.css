@@ -1,0 +1,85 @@
+/* Background styling */
+body {
+    background-image: url('/static/login.jpg'); /* Ensure this path is correct */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Container styling for form */
+.container {
+    background-color: rgba(0, 0, 0, 0.7) !important; /* Semi-transparent black background */
+    padding: 1.5rem !important; /* Reduced padding */
+    border-radius: 8px !important;
+    max-width: 500px !important; /* Reduced maximum width for the form */
+    width: 90% !important; /* Responsive width */
+    color: white !important;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5) !important;
+    text-align: center !important;
+}
+
+/* Heading */
+h2 {
+    color: #ffffff !important;
+    font-size: 22px !important; /* Slightly smaller font size */
+    margin-bottom: 1rem !important;
+    text-align: center !important;
+}
+
+/* Input fields */
+.form-label {
+    color: #ffffff !important;
+}
+
+.inputBox {
+    width: 100% !important; /* Full width of container */
+    padding: 0.7rem !important; /* Reduced padding */
+    border-radius: 5px !important;
+    background-color: rgba(255, 255, 255, 0.1) !important; /* Transparent input background */
+    border: none !important;
+    color: #ffffff !important;
+    margin-bottom: 1rem !important;
+}
+
+.inputBox:focus {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    outline: none !important;
+    border: 1px solid #ffffff !important;
+}
+
+/* Button styles */
+.btn-primary {
+    background-color: #1a73e8 !important;
+    border: none !important;
+    width: 100% !important;
+    padding: 0.7rem !important; /* Reduced padding */
+    margin-top: 1rem !important;
+    transition: 0.3s !important;
+}
+
+.btn-primary:hover {
+    background-color: #155db2 !important;
+}
+
+.btn-secondary {
+    background-color: #e0e0e0 !important;
+    color: #333 !important;
+    width: 100% !important;
+    text-align: center !important;
+    display: inline-block !important;
+    padding: 0.7rem !important; /* Reduced padding */
+    margin-top: 1rem !important;
+}
+
+/* Error message */
+.alert {
+    background-color: rgba(255, 0, 0, 0.8) !important;
+    color: white !important;
+    border: none !important;
+    text-align: center !important;
+}

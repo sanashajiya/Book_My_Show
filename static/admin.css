@@ -1,0 +1,22 @@
+#wrapper {
+    display: flex;
+    align-items: stretch;
+}
+
+#sidebar-wrapper {
+    min-width: 250px;
+    max-width: 250px;
+}
+
+#page-content-wrapper {
+    flex: 1;
+}
+
+.movie-poster {
+    width: 50px;
+    height: 70px;
+}
+
+.toggled #sidebar-wrapper {
+    margin-left: -250px;
+}

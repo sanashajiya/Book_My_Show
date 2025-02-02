@@ -1,0 +1,36 @@
+<!-- admin_index.html -->
+{% extends "base2.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center mt-4">ADMIN DASHBOARD</h2>
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h3>{{ total_users }}</h3>
+                    <p>Total Users</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h3>{{ total_bookings }}</h3>
+                    <p>Total Booking</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h3>{{ total_movies }}</h3>
+                    <p>Total Movie</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

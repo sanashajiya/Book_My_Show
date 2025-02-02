@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ movie.name }} - Movie Ticket Booking{% endblock %}
+
+{% block content %}
+<section class="container mt-5">
+    <div class="row">
+        <div class="col-md-5">
+            <img src="{{ url_for('static', filename='uploads/' + movie.image_filename) }}" alt="{{ movie.name }}" class="img-fluid rounded movie-poster">
+        </div>
+        <div class="col-md-7">
+            <h2>{{ movie.name }}</h2>
+            <p class="text-muted">A thrilling adventure that takes you on a journey of excitement, suspense, and drama. Discover the unexpected twists and enjoy the remarkable storytelling in this must-watch movie experience.</p>
+            <table class="table table-striped details-table">
+                <tr>
+                    <th>Language:</th>
+                    <td>{{ movie.language }}</td>
+                </tr>
+                <tr>
+                    <th>Price:</th>
+                    <td>{{ movie.price }}</td>
+                </tr>
+                <tr>
+                    <th>Duration:</th>
+                    <td>{{ movie.duration }}</td>
+                </tr>
+                <tr>
+                    <th>Trailer:</th>
+                    <td>
+                        <a href="{{ movie.trailer }}" target="_blank" rel="noopener noreferrer">
+                            Watch Trailer
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Select Date:</th>
+                    <td><input type="date" class="form-control" id="date" required></td>
+                </tr>
+                <tr>
+                    <th>Select Time:</th>
+                    <td>
+                        <select class="form-control" id="time" required>
+                            <option>10:00 AM</option>
+                            <option>1:00 PM</option>
+                            <option>4:00 PM</option>
+                            <option>7:00 PM</option>
+                            <option>10:00 PM</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <a href="{{ url_for('book', movie_id=movie.id) }}" class="btn btn-primary mt-3">Confirm Booking</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

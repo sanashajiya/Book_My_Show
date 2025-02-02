@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+
+{% block title %}Book Movie Seats - {{ movie.name }}{% endblock %}
+
+{% block styles %}
+<style>
+    body {
+        background-image: url("{{ url_for('static', filename='movie_image/z3.jpg') }}");
+        background-size: cover; /* Ensures the image covers the entire background */
+        background-repeat: no-repeat; /* Prevents the image from repeating */
+        background-attachment: fixed; /* Ensures the background remains fixed while scrolling */
+        background-position: center; /* Centers the background image */
+    }
+    .container_2 {
+        background-color: rgba(0,0, 0, 0.9); /* Slightly transparent white background */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow */
+    }
+    .seat-container {
+        margin-top: 20px;
+    }
+    .seat {
+        width: 30px;
+        height: 30px;
+        margin: 5px;
+        display: inline-block;
+        text-align: center;
+        line-height: 30px;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .empty {
+        background-color: #e0e0e0;
+        color: #000;
+    }
+    .reserved {
+        background-color: #d9534f;
+        color: #fff;
+        cursor: not-allowed;
+    }
+    .selected {
+        background-color: #5cb85c;
+        color: #fff;
+    }
+    .legend {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+    .color-box {
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        margin-right: 10px;
+    }
+    .screen {
+        background-color: #444;
+        color: #fff;
+        text-align: center;
+        padding: 10px;
+        border-radius: 5px;
+        margin: 20px 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container_2 container_1">
+    <h2>Book Your Seats for "{{ movie.name }}"</h2>
+    <p>Language: {{ movie.language }} | Duration: {{ movie.duration }} | Price per Seat: ${{ movie.price }}</p>
+
+    <!-- User Input Form -->
+    <div class="form-container">
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" placeholder="Enter your name" required>
+        </div>
+        <div>
+            <label for="seat-count">Number of Seats:</label>
+            <input type="number" id="seat-count" placeholder="Enter the number of seats" min="1" max="10" required>
+        </div>
+        <button onclick="startSelection()">Start Selecting</button>
+    </div>
+
+    <!-- Seat Layout -->
+    <div class="seat-container">
+        <div class="legend">
+            <div><div class="color-box selected"></div>Selected Seat</div>
+            <div><div class="color-box reserved"></div>Reserved Seat</div>
+            <div><div class="color-box empty"></div>Empty Seat</div>
+        </div>
+        <div class="screen">SCREEN THIS WAY</div>
+        <div id="seats">
+            <!-- Seats will be dynamically generated here -->
+        </div>
+    </div>
+
+    <!-- Display Selected Seat Details -->
+    <div class="seat-details">
+        <h3>Selected Seats</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Number of Seats</th>
+                    <th>Seats</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="display-name"></td>
+                    <td id="display-seat-count"></td>
+                    <td id="display-seats"></td>
+                </tr>
+            </tbody>
+        </table>
+        <button onclick="confirmBooking()">Confirm Booking</button>
+    </div>
+</div>
+
+<script>
+    const maxSeats = 120; // Total number of seats
+    let selectedSeats = [];
+    let maxSelection;
+    const reservedSeats = {{ reserved_seats | tojson }};
+
+    // Generate seats dynamically
+    function generateSeats() {
+        const seatContainer = document.getElementById('seats');
+        seatContainer.innerHTML = '';
+        for (let i = 1; i <= maxSeats; i++) {
+            const seat = document.createElement('div');
+            seat.classList.add('seat');
+            if (reservedSeats.includes(i)) {
+                seat.classList.add('reserved');
+            } else {
+                seat.classList.add('empty');
+                seat.addEventListener('click', () => selectSeat(seat, i));
+            }
+            seat.id = `seat-${i}`;
+            seatContainer.appendChild(seat);
+            if (i % 12 === 0) {
+                seatContainer.appendChild(document.createElement('br')); // Line break every 12 seats
+            }
+        }
+    }
+
+    // Start seat selection
+    function startSelection() {
+        const name = document.getElementById('name').value;
+        maxSelection = parseInt(document.getElementById('seat-count').value);
+        
+        if (name === "" || isNaN(maxSelection) || maxSelection < 1) {
+            alert("Please fill in your name and the number of seats correctly.");
+            return;
+        }
+        
+        document.getElementById('display-name').innerText = name;
+        document.getElementById('display-seat-count').innerText = maxSelection;
+        selectedSeats = []; // Reset selected seats
+        generateSeats(); // Generate seats
+        updateSelectedSeatsDisplay();
+    }
+
+    // Select or deselect a seat
+    function selectSeat(seat, seatNumber) {
+        if (!seat.classList.contains('reserved')) {
+            if (seat.classList.contains('selected')) {
+                seat.classList.remove('selected');
+                const seatIndex = selectedSeats.indexOf(seatNumber);
+                selectedSeats.splice(seatIndex, 1);
+                seat.classList.add('empty');
+            } else {
+                if (selectedSeats.length < maxSelection) {
+                    seat.classList.remove('empty');
+                    seat.classList.add('selected');
+                    selectedSeats.push(seatNumber);
+                } else {
+                    alert(`You can only select up to ${maxSelection} seats.`);
+                }
+            }
+            updateSelectedSeatsDisplay();
+        }
+    }
+
+    // Update the displayed selected seats
+    function updateSelectedSeatsDisplay() {
+        document.getElementById('display-seats').innerText = selectedSeats.join(', ');
+    }
+
+    // Confirm booking
+    function confirmBooking() {
+        const name = document.getElementById('name').value;
+        const seatCount = document.getElementById('seat-count').value;
+
+        if (selectedSeats.length === parseInt(seatCount)) {
+            const seats = selectedSeats.join(','); // Format seats as comma-separated string
+            const url = `/payment?name=${encodeURIComponent(name)}&seatCount=${seatCount}&seats=${encodeURIComponent(seats)}&movieId={{ movie.id }}`;
+            window.location.href = url; // Redirect to payment page
+        } else {
+            alert(`Please select ${seatCount} seats.`);
+        }
+    }
+
+    // Generate seats on page load
+    document.addEventListener('DOMContentLoaded', generateSeats);
+</script>
+{% endblock %}

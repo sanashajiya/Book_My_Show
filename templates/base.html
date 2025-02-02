@@ -1,0 +1,69 @@
+<!-- base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Movie Ticket Booking{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    {% block styles %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand text-warning font-weight-bold" href="#">Movie Ticket Booking</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ url_for('index') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('user_movies') }}">All Movies</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('about') }}">Contact Us</a>
+                </li>
+            </ul>
+            
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search movies..." aria-label="Search">
+                <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Search</button>
+            </form>
+            
+            <div class="auth-buttons ml-3">
+                <a href="{{ url_for('register') }}" class="btn btn-warning mr-2">Sign Up</a>
+                <a href="{{ url_for('login') }}" class="btn btn-warning mr-2">Log In</a>
+                <!-- <button class="btn btn-outline-light">Login</button> -->
+            </div>
+            
+        </div>
+    </nav>
+
+    {% block content %}{% endblock %}
+
+    <!-- Dark Footer with Background Image -->
+<footer class="bg-dark text-white text-center py-5" style="background: url('footer-background.jpg') no-repeat center center; background-size: cover;">
+    <div class="container">
+        <h5>Movie Ticket Booking</h5>
+        <p>Your gateway to the latest movies!</p>
+        <p>Email: support@movieticketbooking.com | Phone: +1 (555) 123-4567</p>
+        <div class="social-links">
+            <a href="#" class="text-white mr-3">Facebook</a>
+            <a href="#" class="text-white mr-3">Twitter</a>
+            <a href="#" class="text-white">Instagram</a>
+        </div>
+        <hr class="my-4">
+        <p>&copy; 2024 Movie Ticket Booking. All Rights Reserved.</p>
+    </div>
+</footer>
+
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

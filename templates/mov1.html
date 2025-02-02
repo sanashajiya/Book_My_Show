@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Movie Details - Movie Ticket Booking{% endblock %}
+
+{% block content %}
+  <!-- Movie Details Section -->
+  <section class="container mt-5">
+    <div class="row">
+      <!-- Movie Poster -->
+      <div class="col-md-5">
+        <img src="{{ url_for('static', filename='img2.jpeg') }}" alt="Movie Poster" class="img-fluid rounded movie-poster">
+      </div>
+      
+      <!-- Movie Details and Description -->
+      <div class="col-md-7">
+        <h2>Movie Title</h2>
+        <!-- Description Row -->
+        <div class="mb-3">
+          <p class="text-muted">A thrilling adventure that takes you on a journey of excitement, suspense, and drama. Discover the unexpected twists and enjoy the remarkable storytelling in this must-watch movie experience.</p>
+        </div>
+        
+        <!-- Details Table -->
+        <table class="table table-striped details-table">
+          <tr>
+            <th>Name:</th>
+            <td>Movie Title</td>
+          </tr>
+          <tr>
+            <th>Trailer:</th>
+            <td><a href="https://www.youtube.com/watch?v=trailer-link" target="_blank">Watch Trailer</a></td>
+          </tr>
+          <tr>
+            <th>Language:</th>
+            <td>English</td>
+          </tr>
+          <tr>
+            <th>Duration:</th>
+            <td>2h 15min</td>
+          </tr>
+          <tr>
+            <th>Price:</th>
+            <td>250</td>
+          </tr>
+          <tr>
+            <th>Select Date:</th>
+            <td>
+              <input type="date" class="form-control" id="date" required>
+            </td>
+          </tr>
+          <tr>
+            <th>Select Time:</th>
+            <td>
+              <select class="form-control" id="time" required>
+                <option>10:00 AM</option>
+                <option>1:00 PM</option>
+                <option>4:00 PM</option>
+                <option>7:00 PM</option>
+                <option>10:00 PM</option>
+              </select>
+            </td>
+          </tr>
+        </table>
+        <a href="{{ url_for('book') }}" class="btn btn-primary mt-3">Confirm Booking</a>
+      </div>
+    </div>
+  </section>
+{% endblock %}

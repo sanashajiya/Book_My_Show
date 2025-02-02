@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Us - Movie Ticket Booking{% endblock %}
+
+{% block content %}
+<!-- About Us Section -->
+<section class="about-section container mt-5 text-center">
+    <h2 class="about-heading">About Us</h2> <!-- Centered Heading -->
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <img src="{{ url_for('static', filename='movie_image/a3.jpeg') }}" alt="About Us Image" class="about-img rounded">
+        </div>
+        <div class="col-md-7">
+            <p>Movie Ticket Booking is committed to providing a convenient platform for users to book movie tickets easily. We’re here to bring you the latest movies, so you can enjoy your favorites on the big screen with just a few clicks. Our team works hard to ensure the best customer experience, providing seamless ticket booking and customer support.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Form Section -->
+<section class="contact-form container mt-5">
+    <div class="card"> <!-- Bootstrap Card for Contact Form -->
+        <div class="card-body">
+            <h2 class="text-center">Contact Us</h2> <!-- Centered Heading -->
+            <form>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" placeholder="Your Name">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="Your Email">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea class="form-control" id="message" rows="4" placeholder="Your Message"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Location Map Section -->
+<section class="map-section container mt-5 mb-5">
+    <h2 class="text-center">Our Location</h2>
+    <div class="embed-responsive embed-responsive-16by9">
+        <iframe class="embed-responsive-item" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.185843591169!2d-122.08514468486182!3d37.42206577982548!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808fba5e0f0b0f85%3A0xe4a20d94bdb63562!2sGoogleplex!5e0!3m2!1sen!2sus!4v1614783998043!5m2!1sen!2sus" allowfullscreen loading="lazy"></iframe>
+    </div>
+</section>
+
+
+
+{% endblock %}

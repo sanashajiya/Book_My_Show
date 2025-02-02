@@ -1,0 +1,28 @@
+<!-- users.html -->
+{% extends "base2.html" %}
+
+{% block title %}Admin Panel - Registered Users{% endblock %}
+
+{% block content %}
+<h2 class="mt-4 text-center">Registered Users</h2>
+<div class="table-responsive">
+    <table class="table table-bordered table-hover mt-4">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
